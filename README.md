@@ -16,8 +16,10 @@
 
 ## 3. Données
 - **Source :** Données financières historiques (rendements et volatilité glissante).
-- **Lien d'accès :** [Insérer le lien exact de la source ou de Yahoo Finance / FRED]
-- **Licence :** [Indiquer la licence ou "Libre d'accès public"]
+- 
+- **Lien d'accès :**https://www.kaggle.com/code/aloysminyurano/analyse-quantitative-et-pr-vision-de-s-ries-financ
+- 
+- **Licence :** 
 - **Date d'extraction :** 2026-06-11
 - **Instructions :** Les données brutes doivent être placées dans le dossier `data/raw/` sous le nom `marche_financier.csv`.
 
