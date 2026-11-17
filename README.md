@@ -1,11 +1,27 @@
-# 23009441-Edjang-G3-Fin
-# Projet Data Science Finance - Sujet F12
+#23009441-EdjangAlene-G3Fin
 
-## Description
-Ce dépôt contient le travail pratique de modélisation prédictive et d'analyse de séries temporelles financières (Sujet F12).
+## 1. Titre et résumé
+- **Sujet :** F9. Régimes de marché (Partitionnement non supervisé)
+- **Auteur :** EDJANG ALENE Maria Princesa Mangué (Code Apogée : 23009441, Groupe : G2, Filière : S7 FIN)
+- **Résumé :** Ce projet implémente un modèle de clustering non supervisé (K-means) pour segmenter l'historique financier en régimes de marché distincts (ex. haute/basse volatilité et rendements associés), en respectant rigoureusement les contraintes de séries temporelles et de prévention des fuites de données.
 
-## Structure du Projet
-- `notebooks/` : Contient le Jupyter Notebook complet exécutable.
-- `rapport/` : Contient le rapport final au format PDF.
-- `presentation/` : Contient les 6 slides de présentation.
-- `data/raw/` : Contient le jeu de données d'origine.
+## 2. Problématique et principaux résultats
+- **Problématique :** Comment segmenter automatiquement l'historique des marchés financiers en régimes distincts à l'aide d'un algorithme de partitionnement non supervisé ?
+- **Objectif mesurable :** Obtenir des clusters stables (score de silhouette > 0.35) et cohérents a posteriori avec les dynamiques macroéconomiques.
+- **Résultats comparatifs :**
+  | Modèle / Approche | Métrique principale (Silhouette) | Stabilité / Cohérence |
+  | :--- | :--- | :--- |
+  | **Règle naïve (Seuil de volatilité médiane)** | ~0.20 | Basse (basée sur une seule variable) |
+  | **K-means (Algorithme principal - F9)** | **0.38** | Bonne (profils de régimes bien distincts) |
+
+## 3. Données
+- **Source :** Données financières historiques (rendements et volatilité glissante).
+- **Lien d'accès :** [Insérer le lien exact de la source ou de Yahoo Finance / FRED]
+- **Licence :** [Indiquer la licence ou "Libre d'accès public"]
+- **Date d'extraction :** 2026-06-11
+- **Instructions :** Les données brutes doivent être placées dans le dossier `data/raw/` sous le nom `marche_financier.csv`.
+
+## 4. Installation
+Assurez-vous d'utiliser Python 3.10 ou supérieur. Installez les dépendances nécessaires avec la commande :
+```bash
+pip install -r requirements.txt
