@@ -1,0 +1,4 @@
+- FRED, SP500 : https://fred.stlouisfed.org/series/SP500 (extrait le [date])
+- FRED, VIXCLS (validation a posteriori) : https://fred.stlouisfed.org/series/VIXCLS (extrait le [date])
+- Notebook Kaggle consulté (non utilisé comme source de données) : https://www.kaggle.com/code/aloysminyurano/analyse-quantitative-et-pr-vision-de-s-ries-financ
+- Support de cours Tp_ML.ipynb
