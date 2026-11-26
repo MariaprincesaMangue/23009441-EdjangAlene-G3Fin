@@ -35,14 +35,6 @@
 1. Cloner le dépôt :
    ```bash
    git clone [https://github.com/MariaprincesaMangue/23009441-EdjangAlene-G3Fin.git](https://github.com/MariaprincesaMangue/23009441-EdjangAlene-G3Fin.git)
-   cd 23009441-EdjangAlene-G3Fin
+   cd 23009441-EdjangAlene-G3
 
-
-
-
-
-
-
-
-
-   VIDEO DE PRÉSENTATION : https://drive.google.com/file/d/19HYAv52CVkoXEfQkXyNSbghrzTOppvki/view?usp=drive_link
+ ## Vidéo de présentation : [Voir la vidéo ici] https://drive.google.com/file/d/19HYAv52CVkoXEfQkXyNSbghrzTOppvki/view?usp=drive_link
