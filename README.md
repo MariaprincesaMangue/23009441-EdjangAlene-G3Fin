@@ -16,7 +16,7 @@
 | Régression linéaire (algorithme n° 1) | 0,0903 | 0,1150 ± 0,0814 | **0,1051** | 0,1302 | -1,2922 |
 | Ridge réglé ($\alpha=100$, algorithme n° 2) | 0,0922 | 0,1113 | **0,1009** | 0,1259 | -1,1443 |
 
-**Conclusion principale :** L'objectif d'une réduction de 10 % de la MAE par rapport à la référence naïve n'est pas atteint. L'équation estimée ($\widehat{\text{Pente}} = 0,5418 + 0,0380 \times \text{Taux\_directeur}$, $p = 0,225$) montre une relation positive faible et statistiquement non significative : le niveau seul du taux directeur ne suffit pas à prévoir l'aplatissement récent de la courbe des taux.
+**Conclusion principale :** L'objectif d'une réduction de 10 % de la MAE par rapport à la référence naïve n'est pas atteint. L'équation estimée ($\widehat{\text{Pente}} = 0,5418 + 0,0380 \times \text{Taux directeur}$, $p = 0,225$) montre une relation positive faible et statistiquement non significative : le niveau seul du taux directeur ne suffit pas à prévoir l'aplatissement récent de la courbe des taux.
 
 ---
 
@@ -36,5 +36,4 @@
    ```bash
    git clone [https://github.com/MariaprincesaMangue/23009441-EdjangAlene-G3Fin.git](https://github.com/MariaprincesaMangue/23009441-EdjangAlene-G3Fin.git)
    cd 23009441-EdjangAlene-G3
-
  ## Vidéo de présentation : [Voir la vidéo ici] https://drive.google.com/file/d/19HYAv52CVkoXEfQkXyNSbghrzTOppvki/view?usp=drive_link
