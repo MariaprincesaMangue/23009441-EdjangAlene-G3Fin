@@ -36,4 +36,13 @@
    ```bash
    git clone [https://github.com/MariaprincesaMangue/23009441-EdjangAlene-G3Fin.git](https://github.com/MariaprincesaMangue/23009441-EdjangAlene-G3Fin.git)
    cd 23009441-EdjangAlene-G3
+
+ 
+  ## Note explicative concernant le dépôt
+
+* **Changement de sujet :** Le projet initial a été remplacé par l'étude du F25 **taux directeur et de la pente de la courbe**.
+* **Ordre des fichiers sur GitHub :** J'ai tenté à plusieurs reprises d'organiser les fichiers dans l'ordre exact souhaité, mais GitHub trie automatiquement les fichiers par ordre alphabétique (selon le système ASCII) et ne permet pas de définir un ordre personnalisé manuellement.
+  
  ## Vidéo de présentation : [Voir la vidéo ici] https://drive.google.com/file/d/19HYAv52CVkoXEfQkXyNSbghrzTOppvki/view?usp=drive_link
+
+ 
