@@ -1,0 +1,428 @@
+% =====================================================================
+%  RAPPORT À COMPLÉTER
+%  Examen individuel (Partie B) : projet de science des données
+%  appliqué à la finance. S7 FIN et CI, cours BD & DS, ENCG-2026.
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\frenchsetup{StandardLists=true}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[labelsep=colon]{caption}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[hidelinks]{hyperref}
+
+% ========== Mise en page et commandes du gabarit (ne pas modifier) ==========
+\addto\captionsfrench{%
+  \renewcommand{\tablename}{Tableau}%
+  \renewcommand{\refname}{Références et citations}}
+\setlist{itemsep=1pt,topsep=3pt}
+\setlength{\emergencystretch}{2em}
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {1.2ex \@plus 0.4ex \@minus 0.2ex}{-1em}{\normalfont\normalsize\bfseries}}
+\makeatother
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newcounter{nbacompleter}
+\DeclareRobustCommand{\acompleter}[1]{%
+  \stepcounter{nbacompleter}\textcolor{red}{\textit{[À compléter : #1]}}}
+\DeclareRobustCommand{\acel}[1]{%
+  \stepcounter{nbacompleter}\textcolor{red}{\textit{#1}}}
+% \insererfigure{fichier}{légende}{étiquette}
+\newcommand{\insererfigure}[3]{%
+  \begin{figure}[htbp]
+    \centering
+    \IfFileExists{../figures/#1}{\includegraphics[width=0.62\linewidth]{../figures/#1}}{%
+      \IfFileExists{figures/#1}{\includegraphics[width=0.62\linewidth]{figures/#1}}{%
+        \IfFileExists{#1}{\includegraphics[width=0.62\linewidth]{#1}}{%
+          \fbox{\parbox[c][2.4cm][c]{0.6\linewidth}{\centering\small
+            Figure à insérer : \texttt{figures/\detokenize{#1}}}}}}}
+    \caption{#2}
+    \label{#3}
+  \end{figure}}
+% ---------- VOTRE LIEN GITHUB : remplacez l'adresse ci-dessous ----------
+\newcommand{\lienDepot}{https://github.com/MariaprincesaMangue/23009441-EdjangAlene-G3Fin}
+% -------------------------------------------------------------------------
+\newcommand{\lienParDefaut}{https://github.com/identifiant/CodeApogee-Nom-Groupe}
+\newcommand{\afficherlien}{%
+  \ifx\lienDepot\lienParDefaut
+    \stepcounter{nbacompleter}\textcolor{red}{\expandafter\url\expandafter{\lienDepot}}%
+  \else
+    \expandafter\url\expandafter{\lienDepot}%
+  \fi}
+% Photo de l'étudiant(e) : photo_etudiant.jpg ou photo_etudiant.png
+\newcommand{\photo}[1]{\includegraphics[width=3.5cm,height=4.5cm,keepaspectratio]{#1}}
+\newcommand{\insererphoto}{%
+  \IfFileExists{photo_etudiant.jpg}{\photo{photo_etudiant.jpg}}{%
+    \IfFileExists{photo_etudiant.png}{\photo{photo_etudiant.png}}{%
+      \fbox{\parbox[c][4.5cm][c]{3.5cm}{\centering\small\textcolor{red}{\textit{Photo de\\ l'étudiant(e)}}\\[4pt]
+        \scriptsize\texttt{photo\_etudiant.jpg}}}}}}
+% Nom du fichier du logo (modifié selon le fichier téléversé : Logo_encg_settat.png)
+\newcommand{\fichierlogo}{Logo_encg_settat.png}
+\newcommand{\insererlogo}{%
+  \IfFileExists{\fichierlogo}{\includegraphics[height=2.8cm]{\fichierlogo}}{%
+    \IfFileExists{logo_encg_settat.png}{\includegraphics[height=2.8cm]{logo_encg_settat.png}}{%
+      \IfFileExists{figures/\fichierlogo}{\includegraphics[height=2.8cm]{figures/\fichierlogo}}{%
+        \IfFileExists{../figures/\fichierlogo}{\includegraphics[height=2.8cm]{../figures/\fichierlogo}}{%
+          \fbox{\parbox[c][2.8cm][c]{6.5cm}{\centering\small Logo de l'ENCG Settat\\[2pt]
+            \texttt{\detokenize\expandafter{\fichierlogo}}}}}}}}}
+\AtEndDocument{\ifnum\value{nbacompleter}>0
+  \typeout{ATTENTION : il reste \arabic{nbacompleter} élément(s) à compléter.}\fi}
+% ===========================================================================
+
+\begin{document}
+
+% =====================================================================
+%  PAGE DE GARDE (non comptée dans la longueur du rapport)
+% =====================================================================
+\begin{titlepage}
+  \centering
+  \insererlogo\par
+  \vspace{0.8cm}
+  {\large Université Hassan 1\ier{} de Settat}\par
+  \vspace{0.2cm}
+  {\Large\bfseries École Nationale de Commerce et de Gestion de Settat}\par
+  \vspace{0.1cm}
+  {\large ENCG Settat}\par
+  \vspace{1.6cm}
+  \rule{\linewidth}{0.8pt}\par
+  \vspace{0.5cm}
+  {\large Cours BD \& DS : examen individuel (Partie B)}\par
+  \vspace{0.3cm}
+  {\Large Rapport de projet de science des données appliquées à la finance}\par
+  \vspace{0.7cm}
+  {\LARGE\bfseries F25 : Taux directeur et pente de la courbe}\par
+  \vspace{0.5cm}
+  \rule{\linewidth}{0.8pt}\par
+  \vfill
+  \begin{minipage}[c]{0.66\linewidth}
+  \large
+  \begin{tabular}{@{}ll@{}}
+    Réalisé par          & Edjang Alene \\[3pt]
+    Code Apogée          & 23009441 \\[3pt]
+    Groupe et filière    & G3Fin, S7 FIN \\[3pt]
+    Algorithme principal & 1 --- Régression linéaire (\texttt{LinearRegression}) \\[3pt]
+    Enseignant           & A. Larhlimi \\[3pt]
+  \end{tabular}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.3\linewidth}
+    \centering\insererphoto
+  \end{minipage}\par
+  \vspace{0.8cm}
+  {\large\textbf{Dépôt GitHub :} \afficherlien}\par
+  \vfill
+  {\large Année universitaire 2026-2027}\par
+  \vspace{0.2cm}
+  Remis le \today
+\end{titlepage}
+
+% =====================================================================
+\section{Introduction}
+\label{sec:introduction}
+% =====================================================================
+\paragraph{Contexte.} La pente de la courbe des taux, mesurée par l'écart de rendement entre les obligations souveraines à long terme (10 ans) et à court terme (2 ans), constitue un indicateur avancé des anticipations macroéconomiques et du risque de taux. Analyser sa sensibilité aux décisions de politique monétaire de Bank Al-Maghrib (BAM) aide les gérants obligataires et les trésoriers bancaires à ajuster la duration de leurs portefeuilles.
+
+\paragraph{Problématique.} Dans quelle mesure le niveau du taux directeur de Bank Al-Maghrib permet-il d'expliquer et de prévoir la pente de la courbe des taux des Bons du Trésor marocains (10 ans moins 2 ans) sur la période 2018--2026 ?
+
+\paragraph{Objectif mesurable.} Prévoir la pente mensuelle de la courbe des taux ($\text{Taux}_{10\text{ ans}} - \text{Taux}_{2\text{ ans}}$) sur le jeu de test chronologique (14 mois, d'août 2024 à mars 2026) en atteignant une erreur absolue moyenne (MAE) inférieure d'au moins 10\,\% à celle d'une référence naïve égale à la moyenne historique de l'échantillon d'apprentissage.
+
+\paragraph{Nature du problème.} Il s'agit d'un problème d'apprentissage supervisé de \textbf{régression} sur série temporelle, car la variable cible ($\text{Pente}_t$, exprimée en points de pourcentage) est quantitative continue et ordonnée dans le temps.
+
+\paragraph{Organisation du rapport.} La section~\ref{sec:etat} présente l'état de l'art et la section~\ref{sec:travaux} les travaux liés. Les sections~\ref{sec:donnees} à~\ref{sec:protocole} décrivent les données, leur exploration, leur préparation, l'algorithme retenu et le protocole expérimental. La section~\ref{sec:resultats} présente les résultats, discutés en section~\ref{sec:discussion}, avant la conclusion (section~\ref{sec:conclusion}).
+
+% =====================================================================
+\section{État de l'art}
+\label{sec:etat}
+% =====================================================================
+La modélisation de la structure par terme des taux d'intérêt repose historiquement sur trois grandes familles de méthodes. Les modèles de référence naïfs (moyenne historique ou marche aléatoire) servent d'étalon car les taux obligataires intègrent rapidement l'information publique \cite{etat1}. Les approches économétriques classiques, telles que la régression linéaire par moindres carrés ordinaires (MCO) ou les modèles factoriels de Nelson-Siegel, relient directement la pente aux variables macroéconomiques et au taux directeur \cite{etat1,lie1}. Enfin, les méthodes d'apprentissage automatique régularisées ou non linéaires (régression Ridge, forêts aléatoires) visent à réduire la variance de prévision sur des échantillons bruités \cite{sklearn,support}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Panorama des approches pour ce type de problème}
+  \label{tab:etat}
+  \small
+  \begin{tabular}{@{}P{3cm} P{4.3cm} P{3.5cm} P{3.5cm} l@{}}
+    \toprule
+    Approche & Principe & Atouts & Limites & Réf. \\
+    \midrule
+    Référence naïve du domaine & Prédit une pente constante égale à la moyenne historique passée & Aucun paramètre à estimer, robuste au bruit sur petit échantillon & Ignore totalement les cycles de politique monétaire & \cite{etat1} \\
+    Approche classique (MCO) & Estime une relation affine entre le taux directeur et la pente & Interprétabilité directe des coefficients et tests statistiques & Suppose la linéarité et souffre de variables omises & \cite{lie1} \\
+    Apprentissage automatique (Ridge) & Minimise l'erreur quadratique sous pénalité $L_2$ des poids & Réduit la variance de prévision lors de changements de régime & Biais léger vers zéro et interprétation moins directe & \cite{sklearn} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% =====================================================================
+\section{Travaux liés}
+\label{sec:travaux}
+% =====================================================================
+\begin{table}[htbp]
+  \centering
+  \caption{Travaux liés}
+  \label{tab:travaux}
+  \small
+  \begin{tabular}{@{}P{2.4cm} P{2.8cm} P{2.8cm} P{3.4cm} P{3.8cm}@{}}
+    \toprule
+    Travail & Données & Méthode & Résultat principal & Différence avec ce travail \\
+    \midrule
+    Estrella et Hardouvelis, 1991 \cite{lie1} & Taux du Trésor américain (10 ans et 3 mois), 1955--1988 & Régression linéaire et probit sur séries temporelles & La pente prédit significativement l'activité ($R^2 \approx 0{,}35$) et réagit aux resserrements & Étudie l'impact de la pente sur le PIB aux États-Unis plutôt que l'effet du taux directeur au Maroc \\
+    Diebold et Li, 2006 \cite{lie2} & Rendements zéro-coupon américains mensuels, 1970--2000 & Décomposition dynamique de Nelson-Siegel et autorégression & Le facteur pente présente une forte persistance temporelle (autocorrélation $> 0{,}90$) & Modélise toute la courbe sans isoler l'effet direct du taux directeur sur le marché primaire \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Positionnement.} Notre étude transpose l'analyse économétrique de la pente de la courbe des taux au marché souverain marocain (2018--2026) en évaluant la capacité prédictive hors échantillon du seul taux directeur de Bank Al-Maghrib face à une référence naïve stricte.
+
+% =====================================================================
+\section{Jeu de données}
+\label{sec:donnees}
+% =====================================================================
+\begin{itemize}
+  \item \textbf{Nom et source :} \textit{Historique des décisions de politique monétaire (Taux directeur)} et \textit{Taux moyens pondérés mensuels des émissions du Trésor (TMP)}, Bank Al-Maghrib \cite{donnees}, \url{https://www.bkam.ma}
+  \item \textbf{Date d'extraction :} 26/11/2026
+  \item \textbf{Licence ou conditions d'utilisation :} Données publiques officielles diffusées librement par Bank Al-Maghrib ; utilisation académique autorisée.
+  \item \textbf{Taille :} 66 observations et 5 variables, de février 2018 à mars 2026, fréquence mensuelle.
+  \item \textbf{Unité d'observation :} Une fin de mois calendaire correspondant aux adjudications mensuelles des Bons du Trésor marocains.
+  \item \textbf{Variable cible :} \texttt{Pente\_10\_2}, définie par la différence de rendement entre les maturités à 10 ans et à 2 ans : $\text{Pente}_t = \text{Taux}_{10\text{ ans}, t} - \text{Taux}_{2\text{ ans}, t}$.
+  \item \textbf{Adéquation :} La période couvre trois régimes monétaires distincts au Maroc (baisse à 1,50\,\% en 2020, resserrement à 3,00\,\% en 2023, assouplissement à 2,25\,\% en 2025--2026), permettant de tester la sensibilité de la courbe aux chocs de taux.
+  \item \textbf{Limites :} Sur le marché primaire, le Trésor n'émet pas systématiquement la maturité 10 ans chaque mois (38 absences sur 106 mois), réduisant l'échantillon exploitable à 66 observations.
+\end{itemize}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Dictionnaire des principales variables}
+  \label{tab:dictionnaire}
+  \small
+  \begin{tabular}{@{}l P{5.6cm} l l l c@{}}
+    \toprule
+    Variable & Description & Type & Unité & Rôle & Manquants (\%) \\
+    \midrule
+    \texttt{Pente\_10\_2} & Écart $\text{Taux}_{10\text{ ans}} - \text{Taux}_{2\text{ ans}}$ & Numérique & Points de \% & Cible & 0 \\
+    \texttt{Taux\_directeur} & Taux directeur de Bank Al-Maghrib en vigueur & Numérique & \% & Explicative & 0 \\
+    \texttt{2 ans} & Taux moyen pondéré mensuel des BdT à 2 ans & Numérique & \% & Composante cible & 0 \\
+    \texttt{10 ans} & Taux moyen pondéré mensuel des BdT à 10 ans & Numérique & \% & Composante cible & 0 \\
+    \texttt{Date} & Date de fin de mois de l'adjudication & Date & AAAA-MM-JJ & Date & 0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% =====================================================================
+\section{Exploration}
+\label{sec:exploration}
+% =====================================================================
+\paragraph{Statistiques descriptives.} Sur les 66 mois retenus, le taux directeur présente une moyenne de 2,27\,\% (écart-type de 0,52\,\%, minimum 1,50\,\%, maximum 3,00\,\%). Le taux à 2 ans s'établit en moyenne à 2,53\,\% (écart-type 0,60\,\%, min 1,66\,\%, max 3,86\,\%) et le taux à 10 ans à 3,14\,\% (écart-type 0,64\,\%, min 2,29\,\%, max 4,65\,\%). La pente cible (\texttt{Pente\_10\_2}) affiche une moyenne de 0,61 point de pourcentage (écart-type 0,12 point, médiane 0,61 point, minimum 0,23 point, maximum 0,89 point).
+
+\paragraph{Qualité des données.} Aucun doublon de date n'a été détecté. Les 38 mois sans émission simultanée à 10 ans et 2 ans ont été écartés plutôt qu'imputés artificiellement afin de ne pas créer de rendements fictifs. Les valeurs hautes observées au premier trimestre 2023 (taux à 10 ans à 4,65\,\%) correspondent au pic réel d'inflation et de resserrement monétaire et ont donc été conservées.
+
+\insererfigure{fig1_evolution_taux.png}{Évolution du taux directeur de BAM et des taux des Bons du Trésor (2018--2026)}{fig:1}
+
+\noindent\textbf{Lecture de la figure~\ref{fig:1}.} Les taux à 2 ans et 10 ans accompagnent les grands cycles du taux directeur (détente en 2020, hausse marquée en 2022--2023, puis reflux en 2024--2026). Toutefois, la maturité courte (2 ans) réagit plus fortement et plus rapidement aux décisions de Bank Al-Maghrib que la maturité longue (10 ans).
+
+\insererfigure{fig2_evolution_pente.png}{Évolution de la pente de la courbe des taux (10 ans $-$ 2 ans)}{fig:2}
+
+\noindent\textbf{Lecture de la figure~\ref{fig:2}.} La pente de la courbe oscille autour de sa moyenne historique (0,61 point) sans jamais s'inverser. On observe néanmoins une compression prononcée de la pente à partir de fin 2024 et jusqu'en novembre 2025 (0,34 point), traduisant un aplatissement de la courbe malgré la baisse du taux directeur.
+
+% =====================================================================
+\section{Préparation}
+\label{sec:preparation}
+% =====================================================================
+\begin{itemize}
+  \item \textbf{Nettoyage :} Suppression des en-têtes textuels des fichiers bruts de BAM, conversion des pourcentages virgule en nombres flottants, transformation des dates françaises en fins de mois calendaires et filtrage des mois disposant simultanément des taux à 2 ans et 10 ans (66 observations).
+  \item \textbf{Variables créées :} Construction de la variable cible $\texttt{Pente\_10\_2} = \texttt{10 ans} - \texttt{2 ans}$ et alignement causal du taux directeur via une jointure arrière (\texttt{pd.merge\_asof(..., direction="backward")}).
+  \item \textbf{Encodage et mise à l'échelle :} Aucun encodage catégoriel n'est requis. Avec une seule variable explicative (\texttt{Taux\_directeur}) en régression linéaire ordinaire, la standardisation ne modifie ni les prédictions ni les métriques et conserve l'interprétation directe du coefficient en points de pourcentage.
+\end{itemize}
+
+\paragraph{Prévention des fuites.}
+\begin{itemize}
+  \item[$\boxtimes$] Transformations ajustées sur l'apprentissage seulement, dans un \texttt{Pipeline}.
+  \item[$\boxtimes$] Découpage chronologique, sans mélange (données datées).
+  \item[$\boxtimes$] Variables construites avec le passé seulement ; jointure \texttt{backward} garantissant que seule une décision de taux directeur antérieure ou contemporaine à la date $t$ est associée.
+  \item[$\boxtimes$] Aucune variable ne contient la cible, même indirectement.
+  \item[$\boxtimes$] Jeu de test utilisé une seule fois, à la fin.
+\end{itemize}
+L'alignement chronologique a été contrôlé en affichant les cinq premières observations d'apprentissage (février à juin 2018) : chaque fin de mois d'adjudication est associée au taux directeur de 2,25\,\% décidé antérieurement par BAM, sans chevauchement entre les périodes d'apprentissage et de test.
+
+% =====================================================================
+\section{Algorithme}
+\label{sec:algorithme}
+% =====================================================================
+\paragraph{Choix.} L'algorithme principal retenu est la \textbf{régression linéaire} (n\textsuperscript{o}~1 de l'annexe A de l'énoncé) \cite{support}, accompagnée d'une régression \textbf{Ridge} (n\textsuperscript{o}~2) en comparaison. Ce modèle parcimonieux est adapté à une relation quantitative directe à un seul prédicteur sur un échantillon de taille modeste ($n = 52$ en apprentissage), alors que des algorithmes non linéaires complexes (forêts aléatoires ou gradient boosting) surapprendraient le bruit mensuel.
+
+\paragraph{Principe.} L'algorithme estime une relation affine entre la variable explicative et la cible en minimisant la somme des carrés des résidus sur l'échantillon d'apprentissage via l'implémentation \texttt{LinearRegression} de \texttt{scikit-learn} \cite{sklearn}.
+
+\paragraph{Formule essentielle.}
+\begin{equation}
+  \hat{y}_i = \beta_0 + \beta_1 x_i
+  \label{eq:principale}
+\end{equation}
+où $\hat{y}_i$ désigne la pente prédite de la courbe des taux au mois $i$ (en points de pourcentage), $x_i$ le niveau du taux directeur de BAM (en \%), $\beta_0$ l'ordonnée à l'origine et $\beta_1$ le coefficient directeur estimé.
+
+\paragraph{Paramètres appris.} L'algorithme estime le couple $(\beta_0, \beta_1)$ par moindres carrés ordinaires : $\hat{\beta}_0 = 0{,}5418$ et $\hat{\beta}_1 = 0{,}0380$.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Hyperparamètres étudiés}
+  \label{tab:hyper}
+  \small
+  \begin{tabular}{@{}l P{6.4cm} l l@{}}
+    \toprule
+    Hyperparamètre & Rôle et effet attendu & Valeurs testées & Valeur retenue \\
+    \midrule
+    \texttt{fit\_intercept} & Estime l'ordonnée à l'origine $\beta_0$ (niveau moyen de pente) & \texttt{True} & \texttt{True} \\
+    \texttt{alpha} (Ridge) & Pénalise la norme $L_2$ de $\beta_1$ pour limiter la variance & $\{0{,}01; 0{,}1; 1; 10; 100\}$ & $100$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% =====================================================================
+\section{Protocole expérimental}
+\label{sec:protocole}
+% =====================================================================
+\begin{table}[htbp]
+  \centering
+  \caption{Découpage des données}
+  \label{tab:decoupage}
+  \small
+  \begin{tabular}{@{}l l r@{}}
+    \toprule
+    Ensemble & Période ou proportion & Observations \\
+    \midrule
+    Apprentissage & Du 28/02/2018 au 31/07/2024 (80\,\%) & 52 \\
+    Validation & Validation croisée temporelle (\texttt{TimeSeriesSplit}, 5 plis) & 52 \\
+    Test & Du 31/08/2024 au 31/03/2026 (20\,\%) & 14 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{itemize}
+  \item \textbf{Référence naïve :} Prédiction constante égale à la moyenne historique de la pente calculée uniquement sur l'apprentissage ($\bar{y}_{\text{train}} = 0{,}626$ point), étalon naturel pour vérifier si le taux directeur apporte une information prédictive supplémentaire.
+  \item \textbf{Validation :} Validation croisée temporelle \texttt{TimeSeriesSplit(n\_splits=5)} sur les 52 mois d'apprentissage, avec 5 configurations testées pour \texttt{Ridge}.
+  \item \textbf{Métrique principale :} L'erreur absolue moyenne (\textbf{MAE}, en points de pourcentage), car elle mesure directement l'écart moyen de prévision dans l'unité financière de la pente sans surpondérer les mois atypiques.
+  \item \textbf{Métriques secondaires :} La racine de l'erreur quadratique moyenne (\textbf{RMSE}, en points de \%) et le coefficient de détermination ($R^2$).
+  \item \textbf{Graine aléatoire :} 42.
+\end{itemize}
+
+% =====================================================================
+\section{Résultats}
+\label{sec:resultats}
+% =====================================================================
+\begin{table}[htbp]
+  \centering
+  \caption{Comparaison de la référence naïve et du modèle}
+  \label{tab:resultats}
+  \small
+  \begin{tabular}{@{}l cc cc@{}}
+    \toprule
+    & \multicolumn{2}{c}{MAE (points de \%)} & \multicolumn{2}{c}{RMSE (points de \%)} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+    Modèle & Validation & Test & Validation & Test \\
+    \midrule
+    Référence : moyenne historique & 0,1112 $\pm$ 0,0800 & 0,1002 & 0,1298 $\pm$ 0,0841 & 0,1253 \\
+    Régression linéaire (n\textsuperscript{o}~1) & 0,1150 $\pm$ 0,0814 & 0,1051 & 0,1342 $\pm$ 0,0865 & 0,1302 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\insererfigure{fig4_resultats_test.png}{Prévision de la pente sur la période de test (août 2024 -- mars 2026)}{fig:3}
+
+\paragraph{Lecture des résultats.} Sur le jeu de test (tableau~\ref{tab:resultats}), la régression linéaire obtient une MAE de 0,1051 point (RMSE = 0,1302 ; $R^2 = -1{,}29$), légèrement moins bonne que la référence naïve (MAE = 0,1002 ; RMSE = 0,1253 ; $R^2 = -1{,}12$). Sur la figure~\ref{fig:3}, la prédiction linéaire reste quasi plate autour de 0,63--0,65 point alors que la pente observée décroît sensiblement au cours de l'année 2025.
+
+\paragraph{Analyse des erreurs.} L'erreur maximale survient en novembre 2025 (écart absolu de 0,2894 point), lorsque la pente réelle chute à 0,3380 point (taux à 10 ans à 2,74\,\% contre 2,41\,\% à 2 ans) alors que le modèle prédit 0,6274 point.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prédictions sur des observations non utilisées pour l'apprentissage}
+  \label{tab:illustration}
+  \small
+  \begin{tabular}{@{}l l l P{7cm}@{}}
+    \toprule
+    Observation & Prédiction & Valeur réelle & Commentaire \\
+    \midrule
+    31/08/2024 & 0,6464 & 0,6860 & Prédiction proche de la pente observée en début de test (TD = 2,75\,\%) \\
+    30/09/2024 & 0,6464 & 0,5670 & Amorçage de l'aplatissement de la courbe non capté par le taux directeur fixe \\
+    30/11/2025 & 0,6274 & 0,3380 & Plus fort écart du test (0,2894 pt) dû à la détente marquée du rendement à 10 ans \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% =====================================================================
+\section{Discussion des résultats}
+\label{sec:discussion}
+% =====================================================================
+\paragraph{Réponse à l'objectif.} L'objectif fixé dans l'introduction est \textbf{non atteint}, car la régression linéaire affiche une MAE de test de 0,1051 point contre 0,1002 point pour la référence naïve (soit une dégradation de 4,9\,\% au lieu de la réduction visée de 10\,\%).
+
+\paragraph{Interprétation.} Le coefficient estimé ($\hat{\beta}_1 = 0{,}0380$) indique qu'une variation de 1 point du taux directeur n'est associée qu'à 0,038 point de variation de la pente, avec une p-valeur de 0,225 (non significative au seuil de 5\,\%). Conformément à la théorie financière, le taux directeur pilote surtout le segment court (2 ans), tandis que le taux à 10 ans intègre les anticipations d'inflation et la prime de terme ; une corrélation contemporaine ne suffit donc pas à expliquer la dynamique de la courbe.
+
+\paragraph{Surapprentissage et généralisation.} La MAE d'apprentissage (0,0903 point) et celle de test (0,1051 point) restent proches, confirmant l'absence de surapprentissage mais révélant un sous-apprentissage structurel lié à l'utilisation d'une seule variable explicative.
+
+\paragraph{Comparaison avec les travaux liés.} Contrairement à Estrella et Hardouvelis \cite{lie1} qui montrent le pouvoir prédictif de la pente sur l'activité réelle, nos résultats rejoignent Diebold et Li \cite{lie2} en soulignant que la dynamique de la pente possède une inertie propre que le niveau instantané du taux directeur ne capture pas.
+
+\paragraph{Limites et biais.} L'échantillon est limité à 66 mois en raison des adjudications irrégulières à 10 ans sur le marché primaire, et la période de test coïncide avec un changement de régime (cycle de baisse des taux de BAM et aplatissement simultané de la courbe).
+
+\paragraph{Pistes d'amélioration.} Premièrement, exploiter les taux quotidiens du marché secondaire publiés par Bank Al-Maghrib afin d'éliminer les mois manquants. Deuxièmement, enrichir le modèle avec l'inflation glissante du HCP, le déficit budgétaire et la liquidité bancaire.
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% =====================================================================
+Cette étude montre que le niveau du taux directeur de Bank Al-Maghrib entretient une relation positive mais faible et statistiquement non significative ($p = 0{,}225$) avec la pente de la courbe des Bons du Trésor marocains (10 ans $-$ 2 ans) sur 2018--2026. Sur la période de test (2024--2026), la régression linéaire obtient une MAE de 0,1051 point contre 0,1002 point pour la référence naïve, ne permettant pas d'améliorer la prévision. L'intégration des taux continus du marché secondaire et des anticipations d'inflation constitue la principale perspective d'amélioration.
+
+% =====================================================================
+%  RÉFÉRENCES ET CITATIONS
+% =====================================================================
+\begin{thebibliography}{9}
+  \bibitem{donnees} Bank Al-Maghrib, \textit{Historique des décisions de politique monétaire} et \textit{Taux moyens pondérés mensuels des émissions du Trésor}, \url{https://www.bkam.ma}, consulté le 26/11/2026.
+  \bibitem{etat1} J.~Y.~Campbell et R.~J.~Shiller, « Yield Spreads and Interest Rate Movements: A Bird's Eye View », \textit{Review of Economic Studies}, vol.~58, n\textsuperscript{o}~3, p.~495-514, 1991.
+  \bibitem{lie1} A.~Estrella et G.~A.~Hardouvelis, « The Term Structure as a Predictor of Real Economic Activity », \textit{The Journal of Finance}, vol.~46, n\textsuperscript{o}~2, p.~555-576, 1991.
+  \bibitem{lie2} F.~X.~Diebold et C.~Li, « Forecasting the Term Structure of Government Bond Yields », \textit{Journal of Econometrics}, vol.~130, n\textsuperscript{o}~2, p.~337-364, 2006.
+  \bibitem{sklearn} F.~Pedregosa \textit{et al.}, « Scikit-learn: Machine Learning in Python », \textit{Journal of Machine Learning Research}, vol.~12, p.~2825-2830, 2011.
+  \bibitem{support} Support du cours BD \& DS, notebook \texttt{Tp\_ML.ipynb}, ENCG-2026.
+\end{thebibliography}
+
+% =====================================================================
+%  ANNEXES
+% =====================================================================
+\appendix
+
+\section{Reproduction}
+\label{ann:reproduction}
+Version corrigée : étiquette \texttt{remise-finale} du dépôt \afficherlien.
+\begin{enumerate}
+  \item Cloner le dépôt : \texttt{git clone} suivi du lien ci-dessus.
+  \item Installer les dépendances : \texttt{pip install -r requirements.txt}.
+  \item Exécuter \texttt{notebooks/projet\_F25.ipynb} avec « Redémarrer et tout exécuter ».
+\end{enumerate}
+
+\section{Tableaux et figures complémentaires}
+\label{ann:complements}
+La figure~\ref{fig:complement} illustre la dispersion de la pente observée en fonction du taux directeur sur l'ensemble de l'échantillon (2018--2026), mettant en évidence la forte variabilité verticale de la pente pour un même niveau de taux directeur (notamment à 2,25\,\%).
+
+\insererfigure{fig3_scatter_td_pente.png}{Dispersion de la pente (10 ans $-$ 2 ans) selon le taux directeur de BAM}{fig:complement}
+
+\section{Déclaration des outils d'IA}
+\label{ann:ia}
+\begin{table}[htbp]
+  \centering
+  \caption{Ressources et outils d'IA utilisés}
+  \label{tab:ia}
+  \small
+  \begin{tabular}{@{}P{3cm} P{4.8cm} P{3.3cm} P{4.4cm}@{}}
+    \toprule
+    Outil ou ressource & Usage précis & Parties concernées & Vérification effectuée \\
+    \midrule
+    Assistant d'IA (Gemini, 26/11/2026) & Structuration du notebook et du rapport LaTeX selon le gabarit imposé, aide au code de jointure temporelle (\texttt{merge\_asof}) et mise en forme des graphiques & Notebook \texttt{projet\_F25.ipynb}, rapport LaTeX et support de soutenance & Code exécuté intégralement dans Google Colab ; toutes les sorties, métriques et figures vérifiées sur les fichiers CSV officiels de Bank Al-Maghrib \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\end{document}
